@@ -23,18 +23,19 @@ class StoreAuthorRequest extends FormRequest
     {
         return [
             'name' => 'required|min:3|max:255',
-            'birthdate' => 'required|date_format:Y-m-d'
+            'birthdate' => 'required|date|date_format:Y-m-d'
         ];
     }
 
     public function messages(): array
-{
-    return [
-        'name.required' => 'O campo nome é obrigatório',
-        'name.min' => 'O tamanho mínimo para o campo nome é 3 caracteres',
-        'name.max' => 'O tamanho máximo para o campo nome é de 255 caracteres',
-        'birthdate.required' => 'O campo data de nascimento é obrigatório',
-        'birthdate.date_format' => 'O campo data de nascimento deve estar no formato AAAA-MM-DD',
-    ];
-}
+    {
+        return [
+            'name.required' => 'O campo nome é obrigatório',
+            'name.min' => 'O tamanho mínimo para o campo nome é 3 caracteres',
+            'name.max' => 'O tamanho máximo para o campo nome é de 255 caracteres',
+            'birthdate.required' => 'O campo data de nascimento é obrigatório',
+            'birthdate.date' => 'O campo data de nascimento deve ser uma data válida',
+            'birthdate.date_format' => 'O campo data de nascimento deve estar no formato AAAA-MM-DD',
+        ];
+    }
 }
