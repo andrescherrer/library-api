@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\V1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\IndexAuthorRequest;
 use App\Http\Requests\StoreAuthorRequest;
 use App\Http\Requests\UpdateAuthorRequest;
 use App\Http\Resources\AuthorCollection;
@@ -12,11 +13,15 @@ use Illuminate\Http\JsonResponse;
 
 class AuthorController extends Controller
 {
-    public function index()
-    {
-        $author = Author::with('books')->paginate();
-        
-        return new AuthorCollection($author);
+    public function index(IndexAuthorRequest $request): AuthorCollection
+    {                
+        $authors = Author::when($request->name, function($query) use ($request) {
+            $query->where('name', 'LIKE', "%".$request->name."%");
+        })
+        ->orderBy('name')
+        ->paginate();
+
+        return new AuthorCollection($authors);
     }
 
     public function store(StoreAuthorRequest $request)
@@ -29,7 +34,7 @@ class AuthorController extends Controller
         return response()->json(status: JsonResponse::HTTP_CREATED);
     }
 
-    public function show(Author $author)
+    public function show(Author $author): AuthorResource
     {
         $author = $author->load('books');
         
