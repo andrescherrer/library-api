@@ -20,7 +20,7 @@ class AuthorResource extends JsonResource
             'nascimento' => $this->birthdate,
             'livros' =>  $this->books->map(fn ($book) => [
                     'nome' => $book->title,
-                    'ano' => $book->published_date,
+                    'data_publicacao' => $book->published_date,
                 ]),            
         ];
     }
