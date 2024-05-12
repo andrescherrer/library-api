@@ -20,7 +20,7 @@ class AuthorController extends Controller
         return new AuthorCollection($authors);
     }
 
-    public function store(StoreAuthorRequest $request)
+    public function store(StoreAuthorRequest $request): JsonResponse
     {
         Author::create([
             'name' => $request->get('name'),
@@ -37,7 +37,7 @@ class AuthorController extends Controller
         return new AuthorResource($author);
     }
 
-    public function update(UpdateAuthorRequest $request, Author $author)
+    public function update(UpdateAuthorRequest $request, Author $author): JsonResponse
     {
         $authorName = $request->get('name', $author->name);
         $authorBirthdate = $request->get('birthdate', $author->birthdate);
@@ -50,7 +50,7 @@ class AuthorController extends Controller
         return response()->json(status: JsonResponse::HTTP_NO_CONTENT);
     }
 
-    public function destroy(Author $author)
+    public function destroy(Author $author): JsonResponse
     {
         $author->delete();
 
