@@ -22,7 +22,18 @@ class UpdateAuthorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'min:3|max:255',
+            'birthdate' => 'date|date_format:Y-m-d'
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name.min' => 'O tamanho mínimo para o campo nome é 3 caracteres',
+            'name.max' => 'O tamanho máximo para o campo nome é de 255 caracteres',
+            'birthdate.date' => 'O campo data de nascimento deve ser uma data válida',
+            'birthdate.date_format' => 'O campo data de nascimento deve estar no formato AAAA-MM-DD',
         ];
     }
 }
