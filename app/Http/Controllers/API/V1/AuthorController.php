@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreAuthorRequest;
 use App\Http\Requests\UpdateAuthorRequest;
+use App\Http\Resources\AuthorCollection;
+use App\Http\Resources\AuthorResource;
 use App\Models\Author;
 use Illuminate\Http\JsonResponse;
 
@@ -12,12 +14,14 @@ class AuthorController extends Controller
 {
     public function index()
     {
-        return Author::with('books')->paginate();
+        $author = Author::with('books')->paginate();
+        
+        return new AuthorCollection($author);
     }
 
     public function store(StoreAuthorRequest $request)
     {
-        $author = Author::create([
+        Author::create([
             'name' => $request->get('name'),
             'birthdate' => $request->get('birthdate'),
         ]);
@@ -27,7 +31,9 @@ class AuthorController extends Controller
 
     public function show(Author $author)
     {
-        return $author->load('books');
+        $author = $author->load('books');
+        
+        return new AuthorResource($author);
     }
 
     public function update(UpdateAuthorRequest $request, Author $author)
