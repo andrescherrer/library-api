@@ -16,6 +16,8 @@ class Book extends Model
         'published_date',
     ];
 
+    protected $hidden = ['pivot'];
+
     public function authors(): BelongsToMany
     {
         return $this->belongsToMany(Author::class)->withTimestamps();
