@@ -15,11 +15,7 @@ class AuthorController extends Controller
 {
     public function index(IndexAuthorRequest $request): AuthorCollection
     {                
-        $authors = Author::when($request->name, function($query) use ($request) {
-            $query->where('name', 'LIKE', "%".$request->name."%");
-        })
-        ->orderBy('name')
-        ->paginate();
+        $authors = $this->filter($request);
 
         return new AuthorCollection($authors);
     }
@@ -59,5 +55,14 @@ class AuthorController extends Controller
         $author->delete();
 
         return response()->json(status: JsonResponse::HTTP_NO_CONTENT);
+    }
+
+    private function filter($request)
+    {
+        return Author::when($request->name, function($query) use ($request) {
+            $query->where('name', 'LIKE', "%".$request->name."%");
+        })
+        ->orderBy('name')
+        ->paginate();
     }
 }
