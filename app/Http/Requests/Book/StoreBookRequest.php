@@ -39,6 +39,7 @@ class StoreBookRequest extends FormRequest
             'published_date.date' => 'O campo data de publicação deve ser uma data válida',
             'published_date.date_format' => 'O campo data de publicação deve estar no formato AAAA-MM-DD',
             'list_of_authors.required' => 'O campo lista de autores é obrigatório',
+            'list_of_authors.array' => 'A lista de autores deve ser um array de inteiros válidos',
             'list_of_authors.*.exists' => 'Os autores devem existir na base de dados'
         ];
     }
