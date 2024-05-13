@@ -12,4 +12,4 @@ Route::get('/user', function (Request $request) {
 
 Route::apiResource('/authors', AuthorController::class);
 Route::apiResource('/books', BookController::class);
-Route::apiResource('/loans', LoanController::class);
+Route::apiResource('/loans', LoanController::class)->only('index', 'store', 'show');
