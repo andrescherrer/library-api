@@ -44,7 +44,7 @@ class BookController extends Controller
         return new BookResource($book);
     }
 
-    public function update(UpdateBookRequest $request, Book $book)
+    public function update(UpdateBookRequest $request, Book $book): JsonResponse
     {
         DB::transaction(function() use($request, $book) {
             $bookTitle = $request->get('title', $book->title);
@@ -63,7 +63,7 @@ class BookController extends Controller
         return response()->json(status: JsonResponse::HTTP_NO_CONTENT);
     }
 
-    public function destroy(Book $book)
+    public function destroy(Book $book): JsonResponse
     {
         $book->delete();
 
